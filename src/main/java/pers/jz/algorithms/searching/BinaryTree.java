@@ -94,5 +94,5 @@ public class BinaryTree<T> {
     private void visit(BinaryTreeNode<T> root) {
         System.out.println(root.getData());
     }
-    
+
 }
