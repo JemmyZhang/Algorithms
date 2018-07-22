@@ -1,8 +1,7 @@
 package pers.jz.algorithms.searching;
 
-import jdk.nashorn.internal.ir.BinaryNode;
-
 import java.util.Objects;
+import java.util.Stack;
 
 /**
  * @author Jemmy Zhang on 2018/7/15.
@@ -15,40 +14,17 @@ public class BinaryTree<T> {
         return Objects.isNull(root);
     }
 
-    public BinaryTreeNode<T> parentNode(BinaryTreeNode<T> currentNode) {
-        return currentNode.getParent();
-    }
-
-    /**
-     * 返回左兄弟结点
-     *
-     * @param currentNode
-     * @return
-     */
-    public BinaryTreeNode<T> leftSibling(BinaryTreeNode<T> currentNode) {
-        return currentNode.getParent().getLeftChild();
-    }
-
-    /**
-     * 返回右兄弟结点
-     *
-     * @param currentNode
-     * @return
-     */
-    public BinaryTreeNode<T> rightSibling(BinaryTreeNode<T> currentNode) {
-        return currentNode.getParent().getRightChild();
-    }
-
     /**
      * 前序遍历
      *
      * @param root
      */
-    public void PreOrder(BinaryTreeNode<T> root) {
-        if (root != null) {
-            visit(root);
-            PreOrder(root.getLeftChild());
-            PreOrder(root.getRightChild());
+    public void preOrder(BinaryTreeNode<T> root) {
+        BinaryTreeNode<T> currentNode = root;
+        if (currentNode != null) {
+            visit(currentNode);
+            preOrder(currentNode.getLeftChild());
+            preOrder(currentNode.getRightChild());
         }
     }
 
@@ -57,11 +33,12 @@ public class BinaryTree<T> {
      *
      * @param root
      */
-    public void InOrder(BinaryTreeNode<T> root) {
-        if (root != null) {
-            PreOrder(root.getLeftChild());
-            visit(root);
-            PreOrder(root.getRightChild());
+    public void inOrder(BinaryTreeNode<T> root) {
+        BinaryTreeNode<T> currentNode = root;
+        if (currentNode != null) {
+            inOrder(currentNode.getLeftChild());
+            visit(currentNode);
+            inOrder(currentNode.getRightChild());
         }
     }
 
@@ -70,11 +47,28 @@ public class BinaryTree<T> {
      *
      * @param root
      */
-    public void PostOrder(BinaryTreeNode<T> root) {
-        if (root != null) {
-            PostOrder(root.getLeftChild());
-            PostOrder(root.getRightChild());
-            visit(root);
+    public void postOrder(BinaryTreeNode<T> root) {
+        BinaryTreeNode<T> currentNode = root;
+        if (currentNode != null) {
+            postOrder(currentNode.getLeftChild());
+            postOrder(currentNode.getRightChild());
+            visit(currentNode);
+        }
+    }
+
+    public void preOrderWithoutRecursion(BinaryTreeNode<T> root) {
+        Stack<BinaryTreeNode<T>> stack = new Stack<>();
+        visit(root);
+        stack.push(root);
+        BinaryTreeNode<T> current = root;
+        while (stack.size() > 0) {
+            BinaryTreeNode<T> currentLeftChild = current.getLeftChild();
+            while (Objects.nonNull(currentLeftChild)) {
+                visit(currentLeftChild);
+                stack.push(currentLeftChild);
+                current = currentLeftChild;
+            }
+
         }
     }
 

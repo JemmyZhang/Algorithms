@@ -7,7 +7,6 @@ import java.util.Objects;
  */
 public class BinaryTreeNode<T> {
     private T data;
-    private BinaryTreeNode<T> parent;
     private BinaryTreeNode<T> leftChild;
     private BinaryTreeNode<T> rightChild;
 
@@ -22,12 +21,10 @@ public class BinaryTreeNode<T> {
         this.data = data;
         if (Objects.nonNull(leftChild)) {
             this.leftChild = leftChild;
-            this.leftChild.setParent(this);
         }
 
         if (Objects.nonNull(rightChild)) {
             this.rightChild = rightChild;
-            this.rightChild.setParent(this);
         }
 
     }
@@ -44,21 +41,12 @@ public class BinaryTreeNode<T> {
         this.data = data;
     }
 
-    public BinaryTreeNode<T> getParent() {
-        return parent;
-    }
-
-    public void setParent(BinaryTreeNode<T> parent) {
-        this.parent = parent;
-    }
-
     public BinaryTreeNode<T> getLeftChild() {
         return leftChild;
     }
 
     public void setLeftChild(BinaryTreeNode<T> leftChild) {
         this.leftChild = leftChild;
-        this.leftChild.setParent(this);
     }
 
     public BinaryTreeNode<T> getRightChild() {
@@ -67,6 +55,5 @@ public class BinaryTreeNode<T> {
 
     public void setRightChild(BinaryTreeNode<T> rightChild) {
         this.rightChild = rightChild;
-        this.rightChild.setParent(this);
     }
 }
