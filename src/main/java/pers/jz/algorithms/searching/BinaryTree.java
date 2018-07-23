@@ -79,6 +79,11 @@ public class BinaryTree<T> {
         }
     }
 
+    /**
+     * 非递归中序遍历
+     *
+     * @param root
+     */
     public void inOrderWithoutRecursion(BinaryTreeNode<T> root) {
         Stack<BinaryTreeNode<T>> stack = new Stack<>();
         BinaryTreeNode<T> current = root;
@@ -125,6 +130,7 @@ public class BinaryTree<T> {
 
     /**
      * 层次遍历
+     *
      * @param root
      */
     public void levelOrder(BinaryTreeNode<T> root) {
@@ -141,6 +147,24 @@ public class BinaryTree<T> {
         }
     }
 
+    /**
+     * 后序遍历求树的高度
+     *
+     * @param root
+     * @return
+     */
+    public int postOrderGetHeight(BinaryTreeNode<T> root) {
+        BinaryTreeNode<T> current = root;
+        if (Objects.nonNull(current)) {
+            int leftHeight = postOrderGetHeight(root.getLeftChild());
+            int rightHeight = postOrderGetHeight(root.getRightChild());
+            int maxHeight = leftHeight > rightHeight ? leftHeight : rightHeight;
+            return maxHeight + 1;
+        }
+        return 0;
+    }
+
+
     public BinaryTreeNode<T> getRoot() {
         return root;
     }
@@ -152,5 +176,4 @@ public class BinaryTree<T> {
     private void visit(BinaryTreeNode<T> root) {
         System.out.println(root.getData());
     }
-
 }
