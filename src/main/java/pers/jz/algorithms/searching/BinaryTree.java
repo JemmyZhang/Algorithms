@@ -1,10 +1,12 @@
 package pers.jz.algorithms.searching;
 
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
- * @author Jemmy Zhang on 2018/7/15.
+ * @author Jemmy Zhang
  */
 public class BinaryTree<T> {
 
@@ -56,25 +58,87 @@ public class BinaryTree<T> {
         }
     }
 
+    /**
+     * 非递归前序遍历
+     *
+     * @param root
+     */
     public void preOrderWithoutRecursion(BinaryTreeNode<T> root) {
         Stack<BinaryTreeNode<T>> stack = new Stack<>();
-        visit(root);
-        stack.push(root);
         BinaryTreeNode<T> current = root;
-        while (stack.size() > 0) {
-            BinaryTreeNode<T> currentLeftChild = current.getLeftChild();
-            while (Objects.nonNull(currentLeftChild)) {
-                visit(currentLeftChild);
-                stack.push(currentLeftChild);
-                current = currentLeftChild;
+        while (stack.size() > 0 || Objects.nonNull(current)) {
+            while (Objects.nonNull(current)) {
+                stack.push(current);
+                visit(current);
+                current = current.getLeftChild();
             }
-
+            if (!stack.isEmpty()) {
+                current = stack.pop();
+                current = current.getRightChild();
+            }
         }
     }
 
-    //层次遍历
-    public void levelOrder(BinaryTreeNode<T> root) {
+    public void inOrderWithoutRecursion(BinaryTreeNode<T> root) {
+        Stack<BinaryTreeNode<T>> stack = new Stack<>();
+        BinaryTreeNode<T> current = root;
 
+        while (stack.size() > 0 || Objects.nonNull(current)) {
+            while (Objects.nonNull(current)) {
+                stack.push(current);
+                current = current.getLeftChild();
+            }
+            if (!stack.isEmpty()) {
+                current = stack.pop();
+                visit(current);
+                current = current.getRightChild();
+            }
+        }
+    }
+
+    /**
+     * 非递归后序遍历
+     *
+     * @param root
+     */
+    public void postOrderWithoutRecursion(BinaryTreeNode<T> root) {
+        Stack<BinaryTreeNode<T>> stack = new Stack<>();
+        BinaryTreeNode<T> current = root;
+        BinaryTreeNode<T> lastVisit = null;
+        while (stack.size() > 0 || Objects.nonNull(current)) {
+            while (Objects.nonNull(current)) {
+                stack.push(current);
+                current = current.getLeftChild();
+            }
+            if (!stack.isEmpty()) {
+                current = stack.peek();
+                if (Objects.equals(null, current.getRightChild())
+                        || Objects.equals(current.getRightChild(), lastVisit)) {
+                    visit(stack.pop());
+                    lastVisit = current;
+                } else {
+                    current = current.getRightChild();
+                }
+            }
+        }
+    }
+
+    /**
+     * 层次遍历
+     * @param root
+     */
+    public void levelOrder(BinaryTreeNode<T> root) {
+        Queue<BinaryTreeNode<T>> queue = new LinkedList<>();
+        BinaryTreeNode<T> current = root;
+        queue.add(current);
+        while (queue.size() != 0) {
+            current = queue.poll();
+            visit(current);
+            if (Objects.nonNull(current.getLeftChild()))
+                queue.add(current.getLeftChild());
+            if (Objects.nonNull(current.getRightChild()))
+                queue.add(current.getRightChild());
+        }
     }
 
     public BinaryTreeNode<T> getRoot() {
