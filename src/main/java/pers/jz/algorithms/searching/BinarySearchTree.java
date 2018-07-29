@@ -1,5 +1,6 @@
 package pers.jz.algorithms.searching;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
@@ -36,5 +37,69 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
             }
         }
         return null;
+    }
+
+    public BinaryTreeNode<T> findMin(BinaryTreeNode<T> root) {
+        BinaryTreeNode<T> current = root;
+        if (Objects.isNull(current))
+            return null;
+        if (Objects.isNull(current.getLeftChild())) {
+            return current;
+        }
+        return findMin(current.getLeftChild());
+    }
+
+    public BinaryTreeNode<T> findMax(BinaryTreeNode<T> root) {
+        BinaryTreeNode<T> current = root;
+        if (Objects.isNull(current)) {
+            return null;
+        }
+        while (Objects.nonNull(current.getRightChild())) {
+            current = current.getRightChild();
+        }
+        return current;
+    }
+
+    public BinaryTreeNode<T> insert(BinaryTreeNode<T> root, T value) {
+        BinaryTreeNode<T> current = root;
+        if (Objects.isNull(value)) {
+            throw new NullPointerException();
+        }
+        if (Objects.isNull(current)) {
+            BinaryTreeNode<T> node = new BinaryTreeNode<T>();
+            node.setData(value);
+            current = node;
+        } else if (value.compareTo(current.getData()) > 0) {
+            current.setRightChild(insert(root.getRightChild(), value));
+        } else if (value.compareTo(current.getData()) < 0) {
+            current.setLeftChild(insert(current.getLeftChild(), value));
+        }
+        return current;
+    }
+
+    public BinaryTreeNode<T> delete(BinaryTreeNode<T> root, T value) {
+        BinaryTreeNode<T> current = root;
+        if (Objects.isNull(value)) {
+            throw new NullPointerException();
+        }
+        if (Objects.isNull(current)) {
+            throw new NoSuchElementException();
+        }
+        if (value.compareTo(current.getData()) < 0) {
+            current.setLeftChild(delete(current.getLeftChild(), value));
+        } else if (value.compareTo(current.getData()) > 0) {
+            current.setRightChild(delete(current.getRightChild(), value));
+        } else {
+            if (Objects.isNull(current.getRightChild())) {
+                current = current.getLeftChild();
+            } else if (Objects.isNull(current.getLeftChild())) {
+                current = current.getRightChild();
+            } else {
+                BinaryTreeNode<T> min = findMin(current.getRightChild());
+                current.setData(min.getData());
+                current.setRightChild(delete(current.getRightChild(), min.getData()));
+            }
+        }
+        return current;
     }
 }

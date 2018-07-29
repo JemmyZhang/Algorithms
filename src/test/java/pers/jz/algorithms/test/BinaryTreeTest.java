@@ -1,7 +1,7 @@
 package pers.jz.algorithms.test;
 
-import org.junit.Assert;
 import org.junit.Test;
+import pers.jz.algorithms.searching.BinarySearchTree;
 import pers.jz.algorithms.searching.BinaryTree;
 import pers.jz.algorithms.searching.BinaryTreeNode;
 
@@ -18,24 +18,51 @@ public class BinaryTreeTest {
     }
 
     @Test
-    public void inOrderTest(){
+    public void inOrderTest() {
         BinaryTree<Integer> tree = generateTree();
         tree.inOrder(tree.getRoot());
         System.out.println("InOrder");
     }
 
     @Test
-    public void postOrderTest(){
+    public void postOrderTest() {
         BinaryTree<Integer> tree = generateTree();
         tree.postOrder(tree.getRoot());
         System.out.println("postOrder");
     }
 
     @Test
-    public void postOrderWithoutRecursion(){
+    public void postOrderWithoutRecursion() {
         BinaryTree<Integer> tree = generateTree();
         tree.postOrderWithoutRecursion(tree.getRoot());
         System.out.println("postOrderWithoutRecursion");
+    }
+
+    @Test
+    public void insertBinarySearchTree() {
+        BinarySearchTree<Integer> tree = new BinarySearchTree<>();
+        BinaryTreeNode<Integer> root = new BinaryTreeNode<>(10);
+        tree.insert(root, 6);
+        tree.insert(root, 3);
+        tree.insert(root, 9);
+        tree.insert(root, 8);
+        tree.insert(root,7);
+        tree.insert(root, 15);
+        tree.insert(root, 13);
+        tree.inOrder(root);
+        System.out.println();
+        tree.insert(root, 11);
+        tree.inOrder(root);
+        System.out.println();
+        tree.delete(root, 13);
+        tree.inOrder(root);
+        System.out.println();
+        tree.delete(root, 11);
+        tree.inOrder(root);
+        System.out.println();
+        tree.delete(root,7);
+        tree.inOrder(root);
+
     }
 
 
@@ -52,7 +79,7 @@ public class BinaryTreeTest {
         root.getRightChild().getRightChild().setRightChild(new BinaryTreeNode<>(10));
         root.getRightChild().getRightChild().getRightChild().setLeftChild(new BinaryTreeNode<>(11));
         root.getRightChild().getRightChild().getRightChild().getLeftChild().setRightChild(new BinaryTreeNode<>(12));
-        BinaryTree<Integer> tree=new BinaryTree<>();
+        BinaryTree<Integer> tree = new BinaryTree<>();
         tree.setRoot(root);
         return tree;
     }
