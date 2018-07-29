@@ -115,16 +115,17 @@ public class BinaryTree<T> {
                 stack.push(current);
                 current = current.getLeftChild();
             }
-            if (!stack.isEmpty()) {
-                current = stack.peek();
-                if (Objects.equals(null, current.getRightChild())
-                        || Objects.equals(current.getRightChild(), lastVisit)) {
-                    visit(stack.pop());
-                    lastVisit = current;
+            if (stack.size() > 0) {
+                BinaryTreeNode<T> top = stack.peek();
+                if (Objects.isNull(top.getRightChild()) ||
+                        Objects.equals(top.getRightChild(), lastVisit)) {
+                    lastVisit = stack.pop();
+                    visit(lastVisit);
                 } else {
-                    current = current.getRightChild();
+                    current = top.getRightChild();
                 }
             }
+
         }
     }
 
@@ -174,6 +175,6 @@ public class BinaryTree<T> {
     }
 
     private void visit(BinaryTreeNode<T> root) {
-        System.out.println(root.getData());
+        System.out.print(root.getData() + ",");
     }
 }

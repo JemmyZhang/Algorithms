@@ -11,13 +11,35 @@ import pers.jz.algorithms.searching.BinaryTreeNode;
 public class BinaryTreeTest {
 
     @Test
-    public void generateTreeTest() {
-        Assert.assertEquals(1, 1);
+    public void preOrderTest() {
+        BinaryTree<Integer> tree = generateTree();
+        tree.preOrder(tree.getRoot());
+        System.out.println("preOrder");
+    }
+
+    @Test
+    public void inOrderTest(){
+        BinaryTree<Integer> tree = generateTree();
+        tree.inOrder(tree.getRoot());
+        System.out.println("InOrder");
+    }
+
+    @Test
+    public void postOrderTest(){
+        BinaryTree<Integer> tree = generateTree();
+        tree.postOrder(tree.getRoot());
+        System.out.println("postOrder");
+    }
+
+    @Test
+    public void postOrderWithoutRecursion(){
+        BinaryTree<Integer> tree = generateTree();
+        tree.postOrderWithoutRecursion(tree.getRoot());
+        System.out.println("postOrderWithoutRecursion");
     }
 
 
-    @Test
-    public void generateTree() {
+    public BinaryTree<Integer> generateTree() {
         BinaryTreeNode<Integer> root = new BinaryTreeNode<>(1);
         root.setLeftChild(new BinaryTreeNode<>(2));
         root.getLeftChild().setLeftChild(new BinaryTreeNode<>(3));
@@ -32,6 +54,6 @@ public class BinaryTreeTest {
         root.getRightChild().getRightChild().getRightChild().getLeftChild().setRightChild(new BinaryTreeNode<>(12));
         BinaryTree<Integer> tree=new BinaryTree<>();
         tree.setRoot(root);
-        tree.preOrder(root);
+        return tree;
     }
 }
