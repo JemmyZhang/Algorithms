@@ -3,7 +3,7 @@ package pers.jz.algorithms.searching;
 /**
  * @author Jemmy Zhang
  */
-public class AVLTreeNode extends BinaryTreeNode{
+public class AVLTreeNode<T> extends BinaryTreeNode<T> {
 
     private int height;
 
@@ -11,12 +11,12 @@ public class AVLTreeNode extends BinaryTreeNode{
         this.height = height;
     }
 
-    public AVLTreeNode(Object data, int height) {
+    public AVLTreeNode(T data, int height) {
         super(data);
         this.height = height;
     }
 
-    public AVLTreeNode(Object data, BinaryTreeNode leftChild, BinaryTreeNode rightChild, int height) {
+    public AVLTreeNode(T data, BinaryTreeNode leftChild, BinaryTreeNode rightChild, int height) {
         super(data, leftChild, rightChild);
         this.height = height;
     }
