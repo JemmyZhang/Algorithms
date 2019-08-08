@@ -18,10 +18,10 @@ public class Sort {
             ListNode before = head;
             ListNode after = head.next;
             for (int j = 1; j < length - i; j++) {
-                ListNode next = after.next;
+                ListNode afterAfter = after.next;
                 if (before.val > after.val) {
                     after.next = before;
-                    before.next = next;
+                    before.next = afterAfter;
                     if (beforeBefore != null) {
                         beforeBefore.next = after;
                     }
@@ -30,7 +30,7 @@ public class Sort {
                     beforeBefore = before;
                     before = after;
                 }
-                after = next;
+                after = afterAfter;
             }
         }
         return head;
