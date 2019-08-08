@@ -5,6 +5,37 @@ package pers.jz.algorithms.sorting;
  */
 public class Sort {
 
+    public static ListNode bubbleSortLinkedList(final ListNode head) {
+        ListNode lengthCounter = head;
+        int length = 0;
+        while (lengthCounter != null) {
+            length++;
+            lengthCounter = lengthCounter.next;
+        }
+
+        for (int i = 0; i < length; i++) {
+            ListNode beforeBefore = null;
+            ListNode before = head;
+            ListNode after = head.next;
+            for (int j = 1; j < length - i; j++) {
+                ListNode next = after.next;
+                if (before.val > after.val) {
+                    after.next = before;
+                    before.next = next;
+                    if (beforeBefore != null) {
+                        beforeBefore.next = after;
+                    }
+                    beforeBefore = after;
+                } else {
+                    beforeBefore = before;
+                    before = after;
+                }
+                after = next;
+            }
+        }
+        return head;
+    }
+
     public static int[] bubbleSort(int[] array) {
         int length = array.length;
         for (int i = 0; i < length; i++) {

@@ -1,4 +1,4 @@
-package pers.jz.algorithms.leetcode.linkedlist;
+package pers.jz.algorithms.sorting;
 
 /**
  * @author Jemmy Zhang on 2019/7/31.
