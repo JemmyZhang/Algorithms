@@ -23,7 +23,7 @@ class ListNode {
     }
 
     public static ListNode initNode(int number) {
-        Preconditions.checkArgument(number > 0);
+        Preconditions.checkArgument(number >= 0);
         ListNode head = ListNode.builder().val(10).build();
         for (int i = 0; i < number; i++) {
             ListNode next = ListNode.builder().val(i).build();

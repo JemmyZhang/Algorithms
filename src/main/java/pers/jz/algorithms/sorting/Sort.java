@@ -130,8 +130,8 @@ public class Sort {
         print(bubbleSort(arrayCopy(array)));
         print(insertionSort(arrayCopy(array)));
         print(selectionSort(arrayCopy(array)));
-        print(ListNode.initNode(1));
-        print(bubbleSortLinkedList(ListNode.initNode(1)));
+        print(ListNode.initNode(0));
+        print(bubbleSortLinkedList(ListNode.initNode(0)));
 
     }
 }
