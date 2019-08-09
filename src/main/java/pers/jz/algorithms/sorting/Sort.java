@@ -13,10 +13,13 @@ public class Sort {
             lengthCounter = lengthCounter.next;
         }
 
+        ListNode sentry = new ListNode();
+        sentry.next=head;
+
         for (int i = 0; i < length; i++) {
-            ListNode beforeBefore = null;
-            ListNode before = head;
-            ListNode after = head.next;
+            ListNode beforeBefore = sentry;
+            ListNode before = sentry.next;
+            ListNode after = before.next;
             for (int j = 1; j < length - i; j++) {
                 ListNode afterAfter = after.next;
                 if (before.val > after.val) {
@@ -33,7 +36,7 @@ public class Sort {
                 after = afterAfter;
             }
         }
-        return head;
+        return sentry.next;
     }
 
     public static int[] bubbleSort(int[] array) {
@@ -105,6 +108,16 @@ public class Sort {
         System.out.println(builder);
     }
 
+    private static void print(ListNode listNode) {
+        StringBuilder builder = new StringBuilder();
+        while (listNode != null) {
+            builder.append(listNode.val);
+            builder.append(",");
+            listNode = listNode.next;
+        }
+        System.out.println(builder);
+    }
+
     private static int[] arrayCopy(int[] origin) {
         int[] array = new int[origin.length];
         System.arraycopy(origin, 0, array, 0, array.length);
@@ -117,5 +130,8 @@ public class Sort {
         print(bubbleSort(arrayCopy(array)));
         print(insertionSort(arrayCopy(array)));
         print(selectionSort(arrayCopy(array)));
+        print(ListNode.initNode(1));
+        print(bubbleSortLinkedList(ListNode.initNode(1)));
+
     }
 }
