@@ -28,6 +28,44 @@ public class Sort {
         return array;
     }
 
+    public static int[] insertionSort(int[] array) {
+        if (array.length < 2) {
+            return array;
+        }
+        for (int i = 1; i < array.length; i++) {
+            int temp = array[i];
+            int j = i - 1;
+            for (; j >= 0; j--) {
+                if (array[j] > temp) {
+                    array[j + 1] = array[j];
+                }
+            }
+            array[j + 1] = temp;
+        }
+        return array;
+    }
+
+    public static int[] selectionSort(int[] array) {
+        if (array.length < 2) {
+            return array;
+        }
+        for (int i = 0; i < array.length; i++) {
+            int min = array[i];
+            int position = i;
+            for (int j = i + 1; j < array.length; j++) {
+                if (min > array[j]) {
+                    min = array[j];
+                    position = j;
+                }
+            }
+            if (position != i) {
+                array[position] = array[i];
+                array[i] = min;
+            }
+        }
+        return array;
+    }
+
     public static ListNode bubbleSortLinkedList(final ListNode head) {
         ListNode lengthCounter = head;
         int length = 0;
@@ -60,23 +98,6 @@ public class Sort {
             }
         }
         return sentry.next;
-    }
-
-    public static int[] insertionSort(int[] array) {
-        if (array.length < 2) {
-            return array;
-        }
-        for (int i = 1; i < array.length; i++) {
-            int temp = array[i];
-            int j = i - 1;
-            for (; j >= 0; j--) {
-                if (array[j] > temp) {
-                    array[j + 1] = array[j];
-                }
-            }
-            array[j + 1] = temp;
-        }
-        return array;
     }
 
     public static ListNode insertionSortLinkedList(ListNode head) {
@@ -131,7 +152,7 @@ public class Sort {
             }
 
             ListNode min = minBefore.getNext();
-            if(Objects.nonNull(min)){
+            if (Objects.nonNull(min)) {
                 minBefore.setNext(min.getNext());
                 min.setNext(iter.getNext());
                 iter.setNext(min);
@@ -145,25 +166,46 @@ public class Sort {
 
     }
 
-    public static int[] selectionSort(int[] array) {
-        if (array.length < 2) {
-            return array;
-        }
-        for (int i = 0; i < array.length; i++) {
-            int min = array[i];
-            int position = i;
-            for (int j = i + 1; j < array.length; j++) {
-                if (min > array[j]) {
-                    min = array[j];
-                    position = j;
-                }
-            }
-            if (position != i) {
-                array[position] = array[i];
-                array[i] = min;
-            }
-        }
+    public static int[] mergeSort(int[] array) {
+        mergeSort(array, 0, array.length - 1);
         return array;
+    }
+
+
+    public static void mergeSort(int[] array, int startIndex, int endIndex) {
+        if (startIndex >= endIndex) {
+            return;
+        }
+        int midIndex = startIndex + ((endIndex - startIndex) >> 1);
+        mergeSort(array, startIndex, midIndex);
+        mergeSort(array, midIndex + 1, endIndex);
+        merge(array, startIndex, midIndex, endIndex);
+    }
+
+    private static void merge(int[] array, int startIndex, int midIndex, int endIndex) {
+        int l1Index = startIndex;
+        int l2Index = midIndex + 1;
+        int[] tempArray = new int[endIndex - startIndex + 1];
+        int counter = 0;
+        while (l1Index <= midIndex && l2Index <= endIndex) {
+            if (array[l1Index] < array[l2Index]) {
+                tempArray[counter++] = array[l1Index++];
+            } else {
+                tempArray[counter++] = array[l2Index++];
+            }
+        }
+
+        for (int i = l1Index; i <= midIndex; i++) {
+            tempArray[counter++] = array[i];
+        }
+
+        for (int j = l2Index; j <= endIndex; j++) {
+            tempArray[counter++] = array[j];
+        }
+
+        for (int i = 0; i < tempArray.length; i++) {
+            array[startIndex + i] = tempArray[i];
+        }
     }
 
     private static void print(int[] array) {
@@ -203,5 +245,6 @@ public class Sort {
         print(bubbleSortLinkedList(ListNode.initReverseListNode(6)));
         print(insertionSortLinkedList(ListNode.initReverseListNode(6)));
         print(selectionSortLinkedList(ListNode.initReverseListNode(6)));
+        print(mergeSort(arrayCopy(array)));
     }
 }
