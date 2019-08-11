@@ -22,9 +22,9 @@ class ListNode {
         val = x;
     }
 
-    public static ListNode initNode(int number) {
+    public static ListNode initReverseListNode(int number) {
         Preconditions.checkArgument(number >= 0);
-        ListNode head = ListNode.builder().val(10).build();
+        ListNode head = ListNode.builder().val(number).build();
         for (int i = 0; i < number; i++) {
             ListNode next = ListNode.builder().val(i).build();
             next.setNext(head.getNext());

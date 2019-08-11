@@ -1,9 +1,32 @@
 package pers.jz.algorithms.sorting;
 
+import java.util.Objects;
+
 /**
  * @author Jemmy Zhang on 2019/8/4.
  */
 public class Sort {
+
+
+    public static int[] bubbleSort(int[] array) {
+        int length = array.length;
+        for (int i = 0; i < length; i++) {
+            boolean isOrdered = true;
+            for (int j = 0; j < length - i - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                    isOrdered = false;
+                }
+            }
+            if (isOrdered) {
+                break;
+            }
+            System.out.println("Sort times: " + (i + 1));
+        }
+        return array;
+    }
 
     public static ListNode bubbleSortLinkedList(final ListNode head) {
         ListNode lengthCounter = head;
@@ -14,7 +37,7 @@ public class Sort {
         }
 
         ListNode sentry = new ListNode();
-        sentry.next=head;
+        sentry.next = head;
 
         for (int i = 0; i < length; i++) {
             ListNode beforeBefore = sentry;
@@ -39,26 +62,6 @@ public class Sort {
         return sentry.next;
     }
 
-    public static int[] bubbleSort(int[] array) {
-        int length = array.length;
-        for (int i = 0; i < length; i++) {
-            boolean isOrdered = true;
-            for (int j = 0; j < length - i - 1; j++) {
-                if (array[j] > array[j + 1]) {
-                    int temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
-                    isOrdered = false;
-                }
-            }
-            if (isOrdered) {
-                break;
-            }
-            System.out.println("Sort times: " + (i + 1));
-        }
-        return array;
-    }
-
     public static int[] insertionSort(int[] array) {
         if (array.length < 2) {
             return array;
@@ -74,6 +77,72 @@ public class Sort {
             array[j + 1] = temp;
         }
         return array;
+    }
+
+    public static ListNode insertionSortLinkedList(ListNode head) {
+        if (Objects.isNull(head)) {
+            return null;
+        }
+        if (Objects.isNull(head.next)) {
+            return head;
+        }
+        ListNode sentry = new ListNode();
+        sentry.setNext(head);
+        ListNode before = sentry.next;
+        ListNode after = sentry.next.next;
+        while (Objects.nonNull(after)) {
+            if (after.getVal() < before.getVal()) {
+                ListNode searcher = sentry;
+                while (searcher.getNext().getVal() < after.getVal()) {
+                    searcher = searcher.getNext();
+                }
+                before.setNext(after.getNext());
+                after.setNext(searcher.getNext());
+                searcher.setNext(after);
+                after = before.getNext();
+            } else {
+                before = before.getNext();
+                after = after.getNext();
+            }
+        }
+        return sentry.getNext();
+    }
+
+    public static ListNode selectionSortLinkedList(ListNode head) {
+        if (Objects.isNull(head)) {
+            return null;
+        }
+        if (Objects.isNull(head.getNext())) {
+            return head;
+        }
+        ListNode sentry = new ListNode();
+        sentry.setNext(head);
+        ListNode iter = sentry;
+        ListNode before = sentry;
+        ListNode after = before.getNext();
+        while (iter.getNext() != null) {
+            ListNode minBefore = after;
+            while (after != null) {
+                if (minBefore.getVal() > after.getVal()) {
+                    minBefore = before;
+                }
+                before = before.getNext();
+                after = after.getNext();
+            }
+
+            ListNode min = minBefore.getNext();
+            if(Objects.nonNull(min)){
+                minBefore.setNext(min.getNext());
+                min.setNext(iter.getNext());
+                iter.setNext(min);
+            }
+
+            iter = iter.getNext();
+            before = iter;
+            after = before.getNext();
+        }
+        return sentry.getNext();
+
     }
 
     public static int[] selectionSort(int[] array) {
@@ -130,8 +199,9 @@ public class Sort {
         print(bubbleSort(arrayCopy(array)));
         print(insertionSort(arrayCopy(array)));
         print(selectionSort(arrayCopy(array)));
-        print(ListNode.initNode(0));
-        print(bubbleSortLinkedList(ListNode.initNode(0)));
-
+        print(ListNode.initReverseListNode(6));
+        print(bubbleSortLinkedList(ListNode.initReverseListNode(6)));
+        print(insertionSortLinkedList(ListNode.initReverseListNode(6)));
+        print(selectionSortLinkedList(ListNode.initReverseListNode(6)));
     }
 }
