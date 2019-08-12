@@ -245,6 +245,45 @@ public class Sort {
         return array;
     }
 
+    public static int[] quickSort(int[] array) {
+        quickSort(array, 0, array.length - 1);
+        return array;
+    }
+
+    public static void quickSort(int[] array, int start, int end) {
+        if (start >= end) {
+            return;
+        }
+        int index = partition(array, start, end);
+        quickSort(array, start, index - 1);
+        quickSort(array, index + 1, end);
+    }
+
+    private static int partition(int[] array, int start, int end) {
+        int pick = array[end];
+        int headWalker = start;
+        int endWalker = end - 1;
+        while (endWalker != headWalker) {
+            while (array[headWalker] <= pick && headWalker < endWalker) {
+                headWalker++;
+            }
+            while (array[endWalker] > pick && endWalker > headWalker) {
+                endWalker--;
+            }
+            if (endWalker > headWalker) {
+                swap(array, headWalker, endWalker);
+            }
+        }
+        if (array[headWalker] > array[end])
+            swap(array, headWalker, end);
+        return headWalker;
+    }
+
+    private static void swap(int[] array, int headWalker, int endWalker) {
+        int temp = array[headWalker];
+        array[headWalker] = array[endWalker];
+        array[endWalker] = temp;
+    }
 
     private static void print(int[] array) {
         StringBuilder builder = new StringBuilder();
@@ -276,14 +315,15 @@ public class Sort {
 
     public static void main(String[] args) {
         int[] array = {5, 2, 3, 4, 6, 7, 11, 12, 44, 5, 0};
-        print(bubbleSort(arrayCopy(array)));
-        print(insertionSort(arrayCopy(array)));
-        print(selectionSort(arrayCopy(array)));
+//        print(bubbleSort(arrayCopy(array)));
+//        print(insertionSort(arrayCopy(array)));
+//        print(selectionSort(arrayCopy(array)));
 //        print(ListNode.initReverseListNode(6));
 //        print(bubbleSortLinkedList(ListNode.initReverseListNode(6)));
 //        print(insertionSortLinkedList(ListNode.initReverseListNode(6)));
 //        print(selectionSortLinkedList(ListNode.initReverseListNode(6)));
-        print(mergeSort(arrayCopy(array)));
-        print(mergeSortWithoutRecursive(arrayCopy(array)));
+//        print(mergeSort(arrayCopy(array)));
+//        print(mergeSortWithoutRecursive(arrayCopy(array)));
+        print(quickSort(arrayCopy(array)));
     }
 }
