@@ -23,7 +23,7 @@ public class Sort {
             if (isOrdered) {
                 break;
             }
-            System.out.println("Sort times: " + (i + 1));
+            //System.out.println("Sort times: " + (i + 1));
         }
         return array;
     }
@@ -38,6 +38,8 @@ public class Sort {
             for (; j >= 0; j--) {
                 if (array[j] > temp) {
                     array[j + 1] = array[j];
+                } else {
+                    break;
                 }
             }
             array[j + 1] = temp;
@@ -208,10 +210,49 @@ public class Sort {
         }
     }
 
+    public static int[] mergeSortWithoutRecursive(int[] array) {
+
+        for (int i = 2; i < array.length * 2; i = i * 2) {
+            for (int j = 0; j < array.length; j = j + i) {
+                int mid = j + i / 2;
+                if (mid >= array.length) {
+                    continue;
+                } else {
+                    int len = j + i > array.length ? array.length : j + i;
+                    int indexLow = j;
+                    int indexHigh = mid;
+                    int[] newArray = new int[len - j];
+                    int counter = 0;
+                    while (indexLow < mid && indexHigh < len) {
+                        if (array[indexLow] < array[indexHigh]) {
+                            newArray[counter++] = array[indexLow++];
+                        } else {
+                            newArray[counter++] = array[indexHigh++];
+                        }
+                    }
+
+                    for (; indexLow < mid; ) {
+                        newArray[counter++] = array[indexLow++];
+                    }
+
+                    for (; indexHigh < len; ) {
+                        newArray[counter++] = array[indexHigh++];
+                    }
+
+                    for (int z = 0; z < newArray.length; z++) {
+                        array[j + z] = newArray[z];
+                    }
+                }
+            }
+        }
+        return array;
+    }
+
+
     private static void print(int[] array) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < array.length; i++) {
-            builder.append(i);
+            builder.append(array[i]);
             if (i != array.length - 1) {
                 builder.append(",");
             }
@@ -237,14 +278,15 @@ public class Sort {
 
 
     public static void main(String[] args) {
-        int[] array = {5, 1, 2, 3, 4, 6};
+        int[] array = {5, 2, 3, 4, 6, 7, 11, 12, 44, 5, 0};
         print(bubbleSort(arrayCopy(array)));
         print(insertionSort(arrayCopy(array)));
         print(selectionSort(arrayCopy(array)));
-        print(ListNode.initReverseListNode(6));
-        print(bubbleSortLinkedList(ListNode.initReverseListNode(6)));
-        print(insertionSortLinkedList(ListNode.initReverseListNode(6)));
-        print(selectionSortLinkedList(ListNode.initReverseListNode(6)));
+//        print(ListNode.initReverseListNode(6));
+//        print(bubbleSortLinkedList(ListNode.initReverseListNode(6)));
+//        print(insertionSortLinkedList(ListNode.initReverseListNode(6)));
+//        print(selectionSortLinkedList(ListNode.initReverseListNode(6)));
         print(mergeSort(arrayCopy(array)));
+        print(mergeSortWithoutRecursive(arrayCopy(array)));
     }
 }
