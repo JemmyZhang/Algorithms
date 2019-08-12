@@ -211,7 +211,6 @@ public class Sort {
     }
 
     public static int[] mergeSortWithoutRecursive(int[] array) {
-
         for (int i = 1; i < array.length; i = i * 2) {
             for (int j = 0; j < array.length; j = j + i) {
                 int indexHigh = j + i;
@@ -230,7 +229,6 @@ public class Sort {
                             newArray[counter++] = array[indexHigh++];
                         }
                     }
-
                     for (; indexLow < mid; ) {
                         newArray[counter++] = array[indexLow++];
                     }
@@ -238,7 +236,6 @@ public class Sort {
                     for (; indexHigh < len; ) {
                         newArray[counter++] = array[indexHigh++];
                     }
-
                     for (int z = 0; z < newArray.length; z++) {
                         array[j + z] = newArray[z];
                     }
