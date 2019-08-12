@@ -212,15 +212,15 @@ public class Sort {
 
     public static int[] mergeSortWithoutRecursive(int[] array) {
 
-        for (int i = 2; i < array.length * 2; i = i * 2) {
+        for (int i = 1; i < array.length; i = i * 2) {
             for (int j = 0; j < array.length; j = j + i) {
-                int mid = j + i / 2;
-                if (mid >= array.length) {
+                int indexHigh = j + i;
+                if (indexHigh > array.length - 1) {
                     continue;
                 } else {
-                    int len = j + i > array.length ? array.length : j + i;
+                    int len = (j + i * 2) > array.length ? array.length : (j + i * 2);
                     int indexLow = j;
-                    int indexHigh = mid;
+                    int mid = indexHigh;
                     int[] newArray = new int[len - j];
                     int counter = 0;
                     while (indexLow < mid && indexHigh < len) {
