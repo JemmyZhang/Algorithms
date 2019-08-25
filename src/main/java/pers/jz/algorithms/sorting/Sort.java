@@ -250,6 +250,13 @@ public class Sort {
         return array;
     }
 
+    /**
+     * 快速排序
+     *
+     * @param array
+     * @param start
+     * @param end
+     */
     public static void quickSort(int[] array, int start, int end) {
         if (start >= end) {
             return;
@@ -283,6 +290,59 @@ public class Sort {
         int temp = array[headWalker];
         array[headWalker] = array[endWalker];
         array[endWalker] = temp;
+    }
+
+    private static int[] bucketSort(int[] array) {
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] > max) {
+                max = array[i];
+            }
+        }
+        bucketSort(array, max+1);
+        return array;
+    }
+
+
+    private static void bucketSort(int[] array, int bucketSize) {
+        ListNode[] buckets = new ListNode[bucketSize];
+        initBuckets(buckets);
+
+        for (int i = 0; i < array.length; i++) {
+            int index = array[i] % bucketSize;
+            insertIntoBucket(buckets[index], array[i]);
+        }
+
+        int counter = 0;
+        for (int i = 0; i < buckets.length; i++) {
+            ListNode head = buckets[i].getNext();
+            while (head != null) {
+                array[counter++] = head.getVal();
+                head = head.getNext();
+            }
+        }
+
+    }
+
+    private static void initBuckets(ListNode[] buckets) {
+        for (int i = 0; i < buckets.length; i++) {
+            buckets[i] = new ListNode();
+        }
+    }
+
+    private static void insertIntoBucket(ListNode bucket, int i) {
+        ListNode head = bucket;
+        while (head.getNext() != null) {
+            if (i >= head.getNext().getVal()) {
+                head = head.getNext();
+            } else if (i < head.getNext().getVal()) {
+                break;
+            }
+        }
+        ListNode newNode = new ListNode(i);
+        newNode.setNext(head.getNext());
+        head.setNext(newNode);
+
     }
 
     private static void print(int[] array) {
@@ -324,6 +384,8 @@ public class Sort {
 //        print(selectionSortLinkedList(ListNode.initReverseListNode(6)));
 //        print(mergeSort(arrayCopy(array)));
 //        print(mergeSortWithoutRecursive(arrayCopy(array)));
-        print(quickSort(arrayCopy(array)));
+//        print(quickSort(arrayCopy(array)));
+
+        print(bucketSort(array));
     }
 }
