@@ -11,5 +11,11 @@
 
 
 ### 7. Reverse Integer
-算数问题，要重点关注越界。
-
+踩坑心得：
+1. 算数问题，要重点关注越界问题。
+2. 正数做除运算（除以正数）是正数；负数做除运算，是负数。
+2. 正数的余数为正数，很直观；负数取余数，余数也是负数。比如-10 mod 3 =-1
+3. 表达式：`a = a x 10 + b`；这个表达式有几个越界风险。
+	1. 如果`a = a x 10 + b`是正数，很可能比`Integer.MAX_VALUE大`。
+	2. 如果`a = a x 10 + b`，则可能比`Integer.MIN_VALUE`小。
+	3. 因此采用`a x 10 + b > Integer.MAX_VALUE`或者`a x 10 + b < Integer.MIN_VALUE`都是不可取的，因为左边的很可能已经越界了。但是可以做一个不定式的换算，即可以改判断为`a > (Integer.MAX_VALUE - b)/10, (b>0)`，或者`a < (Integer.MAX_VALUE - b)/10, (b<0)`; 
