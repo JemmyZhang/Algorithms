@@ -266,6 +266,58 @@ public class Sort {
         quickSort(array, index + 1, end);
     }
 
+    public static void heapSort(int[] array) {
+        initHeap(array);
+        for (int i = array.length - 1; i >= 0; i--) {
+            swap(array, 0, i);
+            //buildHeap(array, 0, i);
+            buildHeapRecursive(array, 0, i);
+        }
+    }
+
+    private static void initHeap(int[] array) {
+        for (int i = array.length / 2 - 1; i >= 0; i--) {
+            //buildHeap(array, i, array.length);
+            buildHeapRecursive(array, i, array.length);
+        }
+    }
+
+    private static void buildHeap(int[] array, int parent, int length) {
+        while (true) {
+            int max = parent;
+            int left = parent * 2 + 1;
+            int right = parent * 2 + 2;
+            if (left < length && array[left] > array[parent]) {
+                max = left;
+            }
+            if (right < length && array[right] > array[max]) {
+                max = right;
+            }
+            if (max == parent) {
+                break;
+            }
+            swap(array, parent, max);
+            parent = max;
+        }
+    }
+
+    private static void buildHeapRecursive(int[] array, int parent, int length) {
+        int max = parent;
+        int left = parent * 2 + 1;
+        int right = parent * 2 + 2;
+        if (left < length && array[left] > array[parent]) {
+            max = left;
+        }
+        if (right < length && array[right] > array[max]) {
+            max = right;
+        }
+        if (max == parent) {
+            return;
+        }
+        swap(array, parent, max);
+        buildHeapRecursive(array, max, length);
+    }
+
     private static int partition(int[] array, int start, int end) {
         int pick = array[end];
         int headWalker = start;
@@ -299,7 +351,7 @@ public class Sort {
                 max = array[i];
             }
         }
-        bucketSort(array, max+1);
+        bucketSort(array, max + 1);
         return array;
     }
 
@@ -385,7 +437,7 @@ public class Sort {
 //        print(mergeSort(arrayCopy(array)));
 //        print(mergeSortWithoutRecursive(arrayCopy(array)));
 //        print(quickSort(arrayCopy(array)));
-
-        print(bucketSort(array));
+        heapSort(array);
+        print(array);
     }
 }
